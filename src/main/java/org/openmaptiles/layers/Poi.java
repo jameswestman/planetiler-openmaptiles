@@ -56,6 +56,7 @@ import java.util.Map;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
+import org.openmaptiles.util.OsmTags;
 
 /**
  * Defines the logic for generating map elements for things like shops, parks, and schools in the {@code poi} layer from
@@ -167,6 +168,7 @@ public class Poi implements
     int rankOrder = poiClassRank + ((nullOrEmpty(name)) ? 2000 : 0);
 
     output.setBufferPixels(BUFFER_SIZE)
+      .putAttrs(OsmTags.GetOsmTags(element.source()))
       .setAttr(Fields.CLASS, poiClass)
       .setAttr(Fields.SUBCLASS, subclass)
       .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))

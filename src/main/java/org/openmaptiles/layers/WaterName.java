@@ -54,6 +54,7 @@ import org.openmaptiles.OpenMapTilesProfile;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
+import org.openmaptiles.util.OsmTags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -161,6 +162,7 @@ public class WaterName implements
       }
       int minZoom = "ocean".equals(place) ? 0 : rank != null ? rank : 8;
       features.point(LAYER_NAME)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .setBufferPixels(BUFFER_SIZE)
         .putAttrs(OmtLanguageUtils.getNames(source.tags(), translations))
         .setAttr(Fields.CLASS, place)
@@ -189,6 +191,7 @@ public class WaterName implements
           minzoom = Math.min(14, Math.max(9, minzoom));
         }
         feature
+          .putAttrs(OsmTags.GetOsmTags(element.source()))
           .setAttr(Fields.CLASS, FieldValues.CLASS_LAKE)
           .setBufferPixels(BUFFER_SIZE)
           .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))

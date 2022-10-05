@@ -71,6 +71,7 @@ import org.openmaptiles.OpenMapTilesProfile;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
+import org.openmaptiles.util.OsmTags;
 
 /**
  * Defines the logic for generating label points for populated places like continents, countries, cities, and towns in
@@ -200,6 +201,7 @@ public class Place implements
   public void process(Tables.OsmContinentPoint element, FeatureCollector features) {
     if (!nullOrEmpty(element.name())) {
       features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .setAttr(Fields.CLASS, FieldValues.CLASS_CONTINENT)
         .setAttr(Fields.RANK, 1)

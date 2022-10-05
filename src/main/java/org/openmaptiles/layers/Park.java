@@ -57,6 +57,7 @@ import org.openmaptiles.OpenMapTilesProfile;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
+import org.openmaptiles.util.OsmTags;
 
 /**
  * Defines the logic for generating map elements for designated parks polygons and their label points in the {@code
@@ -121,6 +122,7 @@ public class Park implements
           .setAttr(Fields.CLASS, clazz)
           .putAttrs(names)
           .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
+          .putAttrs(OsmTags.GetOsmTags(element.source()))
           .setPointLabelGridPixelSize(14, 100)
           .setSortKey(SortKey
             .orderByTruesFirst("national_park".equals(clazz))

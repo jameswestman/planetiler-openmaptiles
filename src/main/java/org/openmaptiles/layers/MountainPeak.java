@@ -58,6 +58,7 @@ import org.openmaptiles.OpenMapTilesProfile;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
+import org.openmaptiles.util.OsmTags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,6 +117,7 @@ public class MountainPeak implements
     Double meters = Parse.meters(element.ele());
     if (meters != null && Math.abs(meters) < 10_000) {
       var feature = features.point(LAYER_NAME)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .setAttr(Fields.CLASS, element.source().getTag("natural"))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .putAttrs(elevationTags(meters))
