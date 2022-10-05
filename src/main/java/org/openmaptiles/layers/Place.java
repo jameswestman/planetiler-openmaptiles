@@ -68,6 +68,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.locationtech.jts.geom.Point;
 import org.openmaptiles.OpenMapTilesProfile;
+import org.openmaptiles.addons.OsmTags;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
@@ -200,6 +201,7 @@ public class Place implements
   public void process(Tables.OsmContinentPoint element, FeatureCollector features) {
     if (!nullOrEmpty(element.name())) {
       features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .setAttr(Fields.CLASS, FieldValues.CLASS_CONTINENT)
         .setAttr(Fields.RANK, 1)
@@ -238,6 +240,7 @@ public class Place implements
       rank = Math.max(1, Math.min(6, rank));
 
       features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .putAttrs(names)
         .setAttr(Fields.ISO_A2, isoA2)
         .setAttr(Fields.CLASS, FieldValues.CLASS_COUNTRY)
@@ -264,6 +267,7 @@ public class Place implements
         int rank = Math.min(6, Math.max(1, state.rank));
 
         features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+          .putAttrs(OsmTags.GetOsmTags(element.source()))
           .putAttrs(names)
           .setAttr(Fields.CLASS, element.place())
           .setAttr(Fields.RANK, rank)
@@ -284,6 +288,7 @@ public class Place implements
       int minzoom = rank <= 3 ? 8 : rank <= 4 ? 9 : 10;
 
       features.pointOnSurface(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .setAttr(Fields.CLASS, "island")
         .setAttr(Fields.RANK, rank)
@@ -298,6 +303,7 @@ public class Place implements
   @Override
   public void process(Tables.OsmIslandPoint element, FeatureCollector features) {
     features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+      .putAttrs(OsmTags.GetOsmTags(element.source()))
       .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
       .setAttr(Fields.CLASS, "island")
       .setAttr(Fields.RANK, 7)
@@ -345,6 +351,7 @@ public class Place implements
       placeType.ordinal() <= PlaceType.SUBURB.ordinal() ? 11 : 14;
 
     var feature = features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+      .putAttrs(OsmTags.GetOsmTags(element.source()))
       .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
       .setAttr(Fields.CLASS, element.place())
       .setAttr(Fields.RANK, rank)

@@ -39,6 +39,8 @@ import com.onthegomap.planetiler.FeatureCollector;
 import com.onthegomap.planetiler.config.PlanetilerConfig;
 import com.onthegomap.planetiler.stats.Stats;
 import com.onthegomap.planetiler.util.Translations;
+
+import org.openmaptiles.addons.OsmTags;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 
@@ -58,6 +60,7 @@ public class Housenumber implements
   @Override
   public void process(Tables.OsmHousenumberPoint element, FeatureCollector features) {
     features.centroidIfConvex(LAYER_NAME)
+      .putAttrs(OsmTags.GetOsmTags(element.source()))
       .setBufferPixels(BUFFER_SIZE)
       .setAttr(Fields.HOUSENUMBER, element.housenumber())
       .setMinZoom(14);

@@ -61,6 +61,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import org.openmaptiles.OpenMapTilesProfile;
+import org.openmaptiles.addons.OsmTags;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
@@ -202,6 +203,7 @@ public class TransportationName implements
         features.point(LAYER_NAME)
           .setBufferPixels(BUFFER_SIZE)
           .putAttrs(OmtLanguageUtils.getNamesWithoutTranslations(element.source().tags()))
+          .putAttrs(OsmTags.GetOsmTags(element.source()))
           .setAttr(Fields.REF, ref)
           .setAttr(Fields.REF_LENGTH, ref != null ? ref.length() : null)
           .setAttr(Fields.CLASS, highwayClass(cls.highwayValue, null, null, null))

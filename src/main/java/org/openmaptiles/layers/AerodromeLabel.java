@@ -38,6 +38,8 @@ package org.openmaptiles.layers;
 import static org.openmaptiles.util.Utils.nullIfEmpty;
 import static org.openmaptiles.util.Utils.nullOrEmpty;
 
+import org.openmaptiles.addons.OsmTags;
+
 import com.onthegomap.planetiler.FeatureCollector;
 import com.onthegomap.planetiler.config.PlanetilerConfig;
 import com.onthegomap.planetiler.expression.MultiExpression;
@@ -72,6 +74,7 @@ public class AerodromeLabel implements
     String clazz = classLookup.getOrElse(element.source(), FieldValues.CLASS_OTHER);
     boolean important = !nullOrEmpty(element.iata()) && FieldValues.CLASS_INTERNATIONAL.equals(clazz);
     features.centroid(LAYER_NAME)
+      .putAttrs(OsmTags.GetOsmTags(element.source()))
       .setBufferPixels(BUFFER_SIZE)
       .setMinZoom(important ? 8 : 10)
       .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))

@@ -55,6 +55,7 @@ import com.onthegomap.planetiler.util.ZoomFunction;
 import java.util.List;
 import java.util.Map;
 import org.openmaptiles.OpenMapTilesProfile;
+import org.openmaptiles.addons.OsmTags;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
@@ -170,6 +171,7 @@ public class Waterway implements
             e.log(stats, "waterway_decode", "Unable to get waterway length for " + feature.id());
           }
           features.line(LAYER_NAME)
+            .putAttrs(OsmTags.GetOsmTags(feature))
             .setAttr(TEMP_REL_ID_ADDR, relId)
             .setBufferPixels(BUFFER_SIZE)
             .setAttr(Fields.CLASS, FieldValues.CLASS_RIVER)

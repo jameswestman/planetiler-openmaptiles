@@ -53,6 +53,8 @@ import com.onthegomap.planetiler.util.Parse;
 import com.onthegomap.planetiler.util.Translations;
 import java.util.List;
 import java.util.Map;
+
+import org.openmaptiles.addons.OsmTags;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
@@ -179,6 +181,7 @@ public class Poi implements
     int rankOrder = poiClassRank + ((nullOrEmpty(name)) ? 2000 : 0);
 
     output.setBufferPixels(BUFFER_SIZE)
+      .putAttrs(OsmTags.GetOsmTags(element.source()))
       .setAttr(Fields.CLASS, poiClass)
       .setAttr(Fields.SUBCLASS, subclass)
       .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))

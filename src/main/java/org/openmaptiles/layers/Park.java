@@ -54,6 +54,7 @@ import com.onthegomap.planetiler.util.Translations;
 import java.util.List;
 import java.util.Locale;
 import org.openmaptiles.OpenMapTilesProfile;
+import org.openmaptiles.addons.OsmTags;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.util.OmtLanguageUtils;
@@ -121,6 +122,7 @@ public class Park implements
           .setAttr(Fields.CLASS, clazz)
           .putAttrs(names)
           .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
+          .putAttrs(OsmTags.GetOsmTags(element.source()))
           .setPointLabelGridPixelSize(14, 100)
           .setSortKey(SortKey
             .orderByTruesFirst("national_park".equals(clazz))
