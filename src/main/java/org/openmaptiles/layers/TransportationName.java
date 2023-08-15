@@ -262,6 +262,7 @@ public class TransportationName implements
     FeatureCollector.Feature feature = features.line(LAYER_NAME)
       .setBufferPixels(BUFFER_SIZE)
       .setBufferPixelOverrides(MIN_LENGTH)
+      .putAttrs(OsmTags.GetOsmTags(element.source()))
       // TODO abbreviate road names - can't port osml10n because it is AGPL
       .putAttrs(OmtLanguageUtils.getNamesWithoutTranslations(element.source().tags()))
       .setAttr(Fields.REF, ref)
@@ -311,6 +312,7 @@ public class TransportationName implements
       features.line(LAYER_NAME)
         .setBufferPixels(BUFFER_SIZE)
         .setBufferPixelOverrides(MIN_LENGTH)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .putAttrs(OmtLanguageUtils.getNamesWithoutTranslations(element.source().tags()))
         .setAttr(Fields.CLASS, "aerialway")
         .setAttr(Fields.SUBCLASS, element.aerialway())
@@ -326,6 +328,7 @@ public class TransportationName implements
       features.line(LAYER_NAME)
         .setBufferPixels(BUFFER_SIZE)
         .setBufferPixelOverrides(MIN_LENGTH)
+        .putAttrs(OsmTags.GetOsmTags(element.source()))
         .putAttrs(OmtLanguageUtils.getNamesWithoutTranslations(element.source().tags()))
         .setAttr(Fields.CLASS, element.shipway())
         .setMinPixelSize(0)
