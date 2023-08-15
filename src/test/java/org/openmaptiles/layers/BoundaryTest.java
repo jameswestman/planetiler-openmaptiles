@@ -596,13 +596,14 @@ class BoundaryTest extends AbstractLayerTest {
 
     List<FeatureCollector.Feature> features = new ArrayList<>();
     profile.finish(OpenMapTilesProfile.OSM_SOURCE, new FeatureCollector.Factory(params, stats), features::add);
+    // Exclude the geocode polygon from the test, that's an addon layer
     assertFeatures(5, List.of(Map.of(
       "adm0_l", "C1",
       "adm0_r", "<null>"
     ), Map.of(
       "adm0_r", "C1",
       "adm0_l", "<null>"
-    )), features);
+    )), features.stream().filter(x -> "boundary".equals(x.getLayer())).toList());
   }
 
   @Test
@@ -661,13 +662,14 @@ class BoundaryTest extends AbstractLayerTest {
 
     List<FeatureCollector.Feature> features = new ArrayList<>();
     profile.finish(OpenMapTilesProfile.OSM_SOURCE, new FeatureCollector.Factory(params, stats), features::add);
+    // Exclude the geocode polygon from the test, that's an addon layer
     assertFeatures(5, List.of(Map.of(
       "adm0_l", "<null>",
       "adm0_r", "<null>"
     ), Map.of(
       "adm0_l", "<null>",
       "adm0_r", "C1"
-    )), features);
+    )), features.stream().filter(x -> "boundary".equals(x.getLayer())).toList());
   }
 
 
