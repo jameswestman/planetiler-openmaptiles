@@ -450,7 +450,7 @@ public class Boundary implements
   /**
    * Minimal set of information extracted from a boundary relation to be used when processing each way in that relation.
    */
-  private record BoundaryRelation(
+  public record BoundaryRelation(
     long id,
     int adminLevel,
     boolean disputed,
