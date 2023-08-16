@@ -4,7 +4,6 @@ import com.onthegomap.planetiler.config.PlanetilerConfig;
 import com.onthegomap.planetiler.stats.Stats;
 import com.onthegomap.planetiler.util.Translations;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.openmaptiles.Layer;
 
