@@ -60,7 +60,12 @@ public class Geocode
 
     @Override
     public List<OsmRelationInfo> preprocessOsmRelation(Relation relation) {
-        if (!relation.hasTag("admin_level"))
+        if (!relation.hasTag("type", "boundary") || !relation.hasTag("admin_level")
+                || !relation.hasTag("boundary", "administrative"))
+            return null;
+
+        var adminLevel = relation.getLong("admin_level");
+        if (adminLevel < 2 || adminLevel > 10)
             return null;
 
         var attrs = new HashMap<String, Object>();
