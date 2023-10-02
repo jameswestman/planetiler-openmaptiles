@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class OsmTags {
   private static final HashSet<String> OSM_TAGS = new HashSet<String>(List.of(
@@ -41,28 +40,5 @@ public class OsmTags {
     }
 
     return map;
-  }
-
-  // Gets the tags from a source feature that are in the given set, prefixed with 'osm:'.
-  private static Map<String, Object> GetOsmTags(WithTags sourceFeature, Set<String> includeTags) {
-    var map = new HashMap<String, Object>();
-
-    for (var tag : sourceFeature.tags().entrySet()) {
-      final var key = tag.getKey();
-
-      if (includeTags.contains(key)) {
-        map.put("osm:" + key, tag.getValue());
-      }
-    }
-
-    return map;
-  }
-
-  private static final HashSet<String> OSM_TRANSPORTATION_TAGS = new HashSet<String>(List.of(
-    "maxspeed"
-  ));
-
-  public static Map<String, Object> GetOsmTransportationTags(WithTags sourceFeature) {
-    return GetOsmTags(sourceFeature, OSM_TRANSPORTATION_TAGS);
   }
 }

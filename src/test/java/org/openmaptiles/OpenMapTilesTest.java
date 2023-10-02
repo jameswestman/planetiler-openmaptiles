@@ -199,10 +199,9 @@ class OpenMapTilesTest {
       "class", "path",
       "subclass", "footway"
     ), 14, 909, LineString.class);
-    // Adding OSM tags causes some lines to not be merged compared to upstream, hence the +9
     assertNumFeatures("transportation", Map.of(
       "class", "primary"
-    ), 14, 259 + 9, LineString.class);
+    ), 14, 259, LineString.class);
   }
 
   @Test
