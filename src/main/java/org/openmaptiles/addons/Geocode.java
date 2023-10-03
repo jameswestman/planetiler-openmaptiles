@@ -28,7 +28,10 @@ import org.slf4j.LoggerFactory;
 public class Geocode
         implements Layer, OpenMapTilesProfile.OsmAllProcessor,
         OpenMapTilesProfile.OsmRelationPreprocessor,
-        OpenMapTilesProfile.FinishHandler {
+        OpenMapTilesProfile.FinishHandler,
+        TimezoneProcessor {
+
+    public static final String TIMEZONE_SOURCE = "timezones";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Geocode.class);
 
@@ -149,5 +152,13 @@ public class Geocode
     }
 
     private record BoundaryInfo(Map<String, Object> attrs, List<Geometry> linestrings) {
+    }
+
+    @Override
+    public void processTimezone(SourceFeature feature, FeatureCollector features) {
+        features.polygon(LAYER_NAME)
+            .setBufferPixels(BUFFER_SIZE)
+            .setZoomRange(ZOOM_LEVEL, ZOOM_LEVEL)
+            .setAttr("tz", feature.getString("tzid"));
     }
 }

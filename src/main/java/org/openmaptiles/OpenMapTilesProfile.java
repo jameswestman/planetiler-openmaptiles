@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.openmaptiles.addons.ExtraLayers;
+import org.openmaptiles.addons.Geocode;
+import org.openmaptiles.addons.TimezoneProcessor;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 import org.openmaptiles.generated.Tables;
 import org.openmaptiles.layers.Transportation;
@@ -106,6 +108,9 @@ public class OpenMapTilesProfile extends ForwardingProfile {
       }
       if (handler instanceof OsmAllProcessor processor) {
         registerSourceHandler(OSM_SOURCE, processor::processAllOsm);
+      }
+      if (handler instanceof TimezoneProcessor processor) {
+        registerSourceHandler(Geocode.TIMEZONE_SOURCE, processor::processTimezone);
       }
     }
 

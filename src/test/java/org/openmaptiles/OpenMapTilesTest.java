@@ -59,6 +59,7 @@ class OpenMapTilesTest {
       "water_polygons_path", waterPath,
       // no centerlines in monaco - so fake it out with an empty source
       "lake_centerlines_path", waterPath,
+      "timezones_path", waterPath,
 
       // Override temp dir location
       "tmpdir", tmpDir.resolve("tmp"),

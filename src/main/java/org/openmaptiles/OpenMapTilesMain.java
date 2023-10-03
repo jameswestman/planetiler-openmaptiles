@@ -3,6 +3,7 @@ package org.openmaptiles;
 import com.onthegomap.planetiler.Planetiler;
 import com.onthegomap.planetiler.config.Arguments;
 import java.nio.file.Path;
+import org.openmaptiles.addons.Geocode;
 import org.openmaptiles.generated.OpenMapTilesSchema;
 
 /**
@@ -46,6 +47,9 @@ public class OpenMapTilesMain {
         // upstream is at https://naciscdn.org/naturalearth/packages/natural_earth_vector.sqlite.zip ,
         // following is same URL as used in the OpenMapTiles, a mirror maintained by MapTiler
         "https://dev.maptiler.download/geodata/omt/natural_earth_vector.sqlite.zip")
+      .addShapefileSource(Geocode.TIMEZONE_SOURCE,
+        sourcesDir.resolve("timezones.shapefile.zip"),
+        "https://github.com/evansiroky/timezone-boundary-builder/releases/download/2023b/timezones.shapefile.zip")
       .addOsmSource(OpenMapTilesProfile.OSM_SOURCE,
         sourcesDir.resolve(area.replaceAll("[^a-zA-Z]+", "_") + ".osm.pbf"),
         "planet".equalsIgnoreCase(area) ? ("aws:latest") : ("geofabrik:" + area))
