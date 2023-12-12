@@ -129,7 +129,8 @@ class OpenMapTilesTest {
   void testContainsBuildings() {
     assertFeatureNear(mbtiles, "building", Map.of(), 7.41919, 43.73401, 13, 14);
     assertNumFeatures("building", Map.of(), 14, 1316, Polygon.class);
-    assertNumFeatures("building", Map.of(), 13, 196, Polygon.class);
+    /* +2 because of the building:part addon */
+    assertNumFeatures("building", Map.of(), 13, 196 + 2, Polygon.class);
   }
 
   @Test
