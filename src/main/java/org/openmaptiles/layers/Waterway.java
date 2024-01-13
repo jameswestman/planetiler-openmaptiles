@@ -172,6 +172,7 @@ public class Waterway implements
           }
           features.line(LAYER_NAME)
             .putAttrs(OsmTags.GetOsmTags(feature))
+            .setId(OsmTags.GetFeatureId(feature))
             .setAttr(TEMP_REL_ID_ADDR, relId)
             .setBufferPixels(BUFFER_SIZE)
             .setAttr(Fields.CLASS, FieldValues.CLASS_RIVER)

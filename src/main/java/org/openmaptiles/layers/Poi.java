@@ -308,6 +308,7 @@ public class Poi implements
 
     output.setBufferPixels(BUFFER_SIZE)
       .putAttrs(OsmTags.GetOsmTags(element.source()))
+      .setId(OsmTags.GetFeatureId(element.source()))
       .setAttr(Fields.CLASS, poiClass)
       .setAttr(Fields.SUBCLASS, subclass)
       .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))

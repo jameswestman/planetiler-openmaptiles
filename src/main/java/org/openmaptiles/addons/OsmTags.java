@@ -1,7 +1,9 @@
 package org.openmaptiles.addons;
 
+import com.onthegomap.planetiler.reader.SourceFeature;
 import com.onthegomap.planetiler.reader.WithTags;
-
+import com.onthegomap.planetiler.reader.osm.OsmElement;
+import com.onthegomap.planetiler.reader.osm.OsmSourceFeature;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -40,5 +42,20 @@ public class OsmTags {
     }
 
     return map;
+  }
+
+  public static long GetFeatureId(SourceFeature sourceFeature) {
+    if (sourceFeature instanceof OsmSourceFeature osmSourceFeature) {
+      var element = osmSourceFeature.originalElement();
+      long id = sourceFeature.id() * 10;
+      if (element instanceof OsmElement.Relation) {
+        id += 4;
+      } else if (element instanceof OsmElement.Way) {
+        id += 1;
+      }
+      return id;
+    } else {
+      return sourceFeature.id() * 10 + 9;
+    }
   }
 }

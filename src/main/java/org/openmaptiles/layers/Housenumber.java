@@ -135,6 +135,7 @@ public class Housenumber implements
 
     features.centroidIfConvex(LAYER_NAME)
       .putAttrs(OsmTags.GetOsmTags(element.source()))
+      .setId(OsmTags.GetFeatureId(element.source()))
       .setBufferPixels(BUFFER_SIZE)
       .setAttr(Fields.HOUSENUMBER, housenumber)
       .setAttr(TEMP_PARTITION, partition)

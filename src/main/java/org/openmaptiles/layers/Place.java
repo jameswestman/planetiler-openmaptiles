@@ -202,6 +202,7 @@ public class Place implements
     if (!nullOrEmpty(element.name())) {
       features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
+        .setId(OsmTags.GetFeatureId(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .setAttr(Fields.CLASS, FieldValues.CLASS_CONTINENT)
         .setAttr(Fields.RANK, 1)
@@ -241,6 +242,7 @@ public class Place implements
 
       features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
+        .setId(OsmTags.GetFeatureId(element.source()))
         .putAttrs(names)
         .setAttr(Fields.ISO_A2, isoA2)
         .setAttr(Fields.CLASS, FieldValues.CLASS_COUNTRY)
@@ -268,6 +270,7 @@ public class Place implements
 
         features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
           .putAttrs(OsmTags.GetOsmTags(element.source()))
+          .setId(OsmTags.GetFeatureId(element.source()))
           .putAttrs(names)
           .setAttr(Fields.CLASS, element.place())
           .setAttr(Fields.RANK, rank)
@@ -291,6 +294,7 @@ public class Place implements
 
       features.pointOnSurface(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
+        .setId(OsmTags.GetFeatureId(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .setAttr(Fields.CLASS, "island")
         .setAttr(Fields.RANK, rank)
@@ -306,6 +310,7 @@ public class Place implements
   public void process(Tables.OsmIslandPoint element, FeatureCollector features) {
     features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
       .putAttrs(OsmTags.GetOsmTags(element.source()))
+      .setId(OsmTags.GetFeatureId(element.source()))
       .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
       .setAttr(Fields.CLASS, "island")
       .setAttr(Fields.RANK, 7)
@@ -355,6 +360,7 @@ public class Place implements
     var feature = features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
       .putAttrs(OsmTags.GetOsmTags(element.source()))
       .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
+      .setId(OsmTags.GetFeatureId(element.source()))
       .setAttr(Fields.CLASS, element.place())
       .setAttr(Fields.RANK, rank)
       .setMinZoom(minzoom)

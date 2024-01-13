@@ -128,6 +128,7 @@ public class Park implements
           .putAttrs(names)
           .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
           .putAttrs(OsmTags.GetOsmTags(element.source()))
+          .setId(OsmTags.GetFeatureId(element.source()))
           .setPointLabelGridPixelSize(14, 100)
           .setSortKey(SortKey
             .orderByTruesFirst("national_park".equals(clazz))

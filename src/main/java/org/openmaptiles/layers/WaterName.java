@@ -182,6 +182,7 @@ public class WaterName implements
         .putAttrs(OsmTags.GetOsmTags(element.source()))
         .setBufferPixels(BUFFER_SIZE)
         .putAttrs(OmtLanguageUtils.getNames(source.tags(), translations))
+        .setId(OsmTags.GetFeatureId(element.source()))
         .setAttr(Fields.CLASS, clazz)
         .setAttr(Fields.INTERMITTENT, element.isIntermittent() ? 1 : 0)
         .setMinZoom(minZoom);
@@ -219,6 +220,7 @@ public class WaterName implements
         .setBufferPixels(BUFFER_SIZE)
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .putAttrs(OsmTags.GetOsmTags(element.source()))
+        .setId(OsmTags.GetFeatureId(element.source()))
         .setAttr(Fields.INTERMITTENT, element.isIntermittent() ? 1 : 0)
         .setMinZoom(minzoom);
     }

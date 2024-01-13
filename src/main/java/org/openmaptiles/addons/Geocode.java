@@ -1,11 +1,20 @@
 package org.openmaptiles.addons;
 
+import com.onthegomap.planetiler.FeatureCollector;
+import com.onthegomap.planetiler.FeatureCollector.Factory;
+import com.onthegomap.planetiler.FeatureCollector.Feature;
+import com.onthegomap.planetiler.geo.GeometryException;
+import com.onthegomap.planetiler.reader.SimpleFeature;
+import com.onthegomap.planetiler.reader.SourceFeature;
+import com.onthegomap.planetiler.reader.osm.OsmElement.Relation;
+import com.onthegomap.planetiler.reader.osm.OsmRelationInfo;
+import com.onthegomap.planetiler.stats.Stats;
+import com.onthegomap.planetiler.util.Translations;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.TopologyException;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
@@ -15,17 +24,6 @@ import org.openmaptiles.layers.Boundary.BoundaryRelation;
 import org.openmaptiles.util.OmtLanguageUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.onthegomap.planetiler.FeatureCollector;
-import com.onthegomap.planetiler.FeatureCollector.Factory;
-import com.onthegomap.planetiler.FeatureCollector.Feature;
-import com.onthegomap.planetiler.geo.GeometryException;
-import com.onthegomap.planetiler.stats.Stats;
-import com.onthegomap.planetiler.reader.SimpleFeature;
-import com.onthegomap.planetiler.reader.SourceFeature;
-import com.onthegomap.planetiler.reader.osm.OsmElement.Relation;
-import com.onthegomap.planetiler.reader.osm.OsmRelationInfo;
-import com.onthegomap.planetiler.util.Translations;
 
 public class Geocode
         implements Layer, OpenMapTilesProfile.OsmAllProcessor,

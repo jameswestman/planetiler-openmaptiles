@@ -118,6 +118,7 @@ public class MountainPeak implements
     if (meters != null && Math.abs(meters) < 10_000) {
       var feature = features.point(LAYER_NAME)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
+        .setId(OsmTags.GetFeatureId(element.source()))
         .setAttr(Fields.CLASS, element.source().getTag("natural"))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
         .putAttrs(elevationTags(meters))
