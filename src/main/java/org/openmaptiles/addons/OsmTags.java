@@ -16,6 +16,7 @@ public class OsmTags {
     "ele",
     "email",
     "internet_access",
+    "level:ref",
     "note",
     "opening_hours",
     "phone",
