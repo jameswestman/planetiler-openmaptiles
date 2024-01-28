@@ -257,6 +257,20 @@ public class Poi implements
     setupPoiFeature(element, features.centroidIfConvex(LAYER_NAME), null);
   }
 
+  private static final List<String> DEFINING_TAGS = List.of(
+    "amenity",
+    "place",
+    "leisure",
+    "shop",
+    "tourism",
+    "highway",
+    "railway",
+    "aeroway",
+    "building",
+    "natural",
+    "historic"
+  );
+
   private <T extends Tables.WithSubclass & Tables.WithStation & Tables.WithFunicular & Tables.WithSport & Tables.WithInformation & Tables.WithReligion & Tables.WithMappingKey & Tables.WithName & Tables.WithIndoor & Tables.WithLayer & Tables.WithSource & Tables.WithOperator & Tables.WithNetwork & Tables.WithBrand & Tables.WithRef> void setupPoiFeature(
     T element, FeatureCollector.Feature output, Integer aggStop) {
     String rawSubclass = element.subclass();
@@ -306,7 +320,7 @@ public class Poi implements
       minzoom = 10;
     }
 
-    output.setBufferPixels(BUFFER_SIZE)
+    var feature = output.setBufferPixels(BUFFER_SIZE)
       .putAttrs(OsmTags.GetOsmTags(element.source()))
       .setId(OsmTags.GetFeatureId(element.source()))
       .setAttr(Fields.CLASS, poiClass)
@@ -319,6 +333,17 @@ public class Poi implements
       .setPointLabelGridPixelSize(14, 64)
       .setSortKey(rankOrder)
       .setMinZoom(minzoom);
+
+    for (var tag : DEFINING_TAGS) {
+      if (element.source().hasTag(tag)) {
+        feature.setAttr("tag", tag);
+        var tagVal = element.source().getTag(tag);
+        if (!tagVal.equals(subclass)) {
+          feature.setAttr("subtag", tagVal);
+        }
+        break;
+      }
+    }
   }
 
   @Override
