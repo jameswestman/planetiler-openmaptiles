@@ -475,7 +475,8 @@ class BoundaryTest extends AbstractLayerTest {
     List<FeatureCollector.Feature> features = new ArrayList<>();
     profile.finish(OpenMapTilesProfile.OSM_SOURCE, new FeatureCollector.Factory(params, stats), features::add);
 
-    return features;
+    /* Only include boundaries, exclude the geocode layer */
+    return features.stream().filter(x -> "boundary".equals(x.getLayer())).toList();
   }
 
   @Test

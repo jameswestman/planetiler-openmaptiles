@@ -75,7 +75,12 @@ public class Geocode
         attrs.putAll(OmtLanguageUtils.getNames(relation.tags(), translations));
 
         synchronized (this) {
-            boundaryGeometries.put(relation.id(), new BoundaryInfo(attrs, new ArrayList<>()));
+            var existing = boundaryGeometries.get(relation.id());
+            if (existing != null) {
+                existing.attrs.putAll(attrs);
+            } else {
+                boundaryGeometries.put(relation.id(), new BoundaryInfo(attrs, new ArrayList<>()));
+            }
         }
 
         return null;
