@@ -70,6 +70,7 @@ public class Geocode
 
         attrs.put("admin_level", relation.getTag("admin_level"));
         attrs.put("wikidata", relation.getTag("wikidata"));
+        attrs.put("iso_a2", relation.getTag("ISO3166-1:alpha2"));
 
         attrs.putAll(OsmTags.GetOsmTags(relation));
         attrs.putAll(OmtLanguageUtils.getNames(relation.tags(), translations));
