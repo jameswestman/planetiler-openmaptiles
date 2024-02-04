@@ -13,6 +13,7 @@ public class OsmTags {
   private static final HashSet<String> OSM_TAGS = new HashSet<String>(List.of(
     "brand:wikidata",
     "brand:wikipedia",
+    "cuisine",
     "ele",
     "email",
     "internet_access",
@@ -22,6 +23,7 @@ public class OsmTags {
     "phone",
     "population",
     "religion",
+    "sport",
     "takeaway",
     "toilets",
     "website",
