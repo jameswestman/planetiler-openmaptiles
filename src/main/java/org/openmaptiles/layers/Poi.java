@@ -269,7 +269,9 @@ public class Poi implements
     "aeroway",
     "building",
     "natural",
-    "historic"
+    "historic",
+    "barrier",
+    "office"
   );
 
   private <T extends Tables.WithSubclass & Tables.WithStation & Tables.WithFunicular & Tables.WithSport & Tables.WithInformation & Tables.WithReligion & Tables.WithMappingKey & Tables.WithName & Tables.WithIndoor & Tables.WithLayer & Tables.WithSource & Tables.WithOperator & Tables.WithNetwork & Tables.WithBrand & Tables.WithRef> void setupPoiFeature(
