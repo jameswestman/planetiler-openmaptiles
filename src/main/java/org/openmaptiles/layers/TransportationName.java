@@ -114,6 +114,11 @@ public class TransportationName implements
     .put(9, 8_000)
     .put(10, 4_000)
     .put(11, 2_000);
+  private static final ZoomFunction<Number> BUFFER_PIXEL_OVERRIDES =
+    ZoomFunction.fromMaxZoomThresholds(Map.of(
+      13, 256,
+      6, 256
+    ));
   private final boolean brunnel;
   private final boolean sizeForShield;
   private final boolean limitMerge;
@@ -258,7 +263,7 @@ public class TransportationName implements
 
     FeatureCollector.Feature feature = features.line(LAYER_NAME)
       .setBufferPixels(BUFFER_SIZE)
-      .setBufferPixelOverrides(MIN_LENGTH)
+      .setBufferPixelOverrides(BUFFER_PIXEL_OVERRIDES)
       .putAttrs(OsmTags.GetOsmTags(element.source()))
       .setId(OsmTags.GetFeatureId(element.source()))
       // TODO abbreviate road names - can't port osml10n because it is AGPL
@@ -274,12 +279,20 @@ public class TransportationName implements
       .setSortKey(element.zOrder())
       .setMinZoom(minzoom);
 
-    // populate route_1, route_2, ... route_n tags and remove duplicates
+    // populate route_1_<something>, route_2_<something>, ... route_n_<something> tags and remove duplicates
     Set<String> routes = new HashSet<>();
     for (var route : relations) {
-      String routeString = route.network() + "=" + coalesce(route.ref(), "");
+      String routeString = route.network() + "=" +
+        coalesce(route.ref(), "") + "=" +
+        coalesce(route.name(), "") + "=" +
+        coalesce(route.colour(), "");
       if (routes.add(routeString)) {
-        feature.setAttr("route_" + routes.size(), routeString);
+        String keyPrefix = "route_" + routes.size() + "_";
+
+        feature.setAttr(keyPrefix + "network", route.network());
+        feature.setAttr(keyPrefix + "ref", nullIfEmpty(route.ref()));
+        feature.setAttr(keyPrefix + "name", route.name());
+        feature.setAttr(keyPrefix + "colour", route.colour());
       }
     }
 
@@ -313,7 +326,7 @@ public class TransportationName implements
     if (!nullOrEmpty(element.name())) {
       features.line(LAYER_NAME)
         .setBufferPixels(BUFFER_SIZE)
-        .setBufferPixelOverrides(MIN_LENGTH)
+        .setBufferPixelOverrides(BUFFER_PIXEL_OVERRIDES)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
         .setId(OsmTags.GetFeatureId(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
@@ -330,7 +343,7 @@ public class TransportationName implements
     if (!nullOrEmpty(element.name())) {
       features.line(LAYER_NAME)
         .setBufferPixels(BUFFER_SIZE)
-        .setBufferPixelOverrides(MIN_LENGTH)
+        .setBufferPixelOverrides(BUFFER_PIXEL_OVERRIDES)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
         .setId(OsmTags.GetFeatureId(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))

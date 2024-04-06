@@ -89,6 +89,7 @@ public class Place implements
   Tables.OsmIslandPoint.Handler,
   Tables.OsmIslandPolygon.Handler,
   Tables.OsmCityPoint.Handler,
+  Tables.OsmBoundaryPolygon.Handler,
   OpenMapTilesProfile.FeaturePostProcessor {
 
   /*
@@ -97,8 +98,10 @@ public class Place implements
    * and minimum zoom level to use for those points.
    */
 
-  private static final TreeMap<Double, Integer> ISLAND_AREA_RANKS = new TreeMap<>(Map.of(
-    Double.MAX_VALUE, 3,
+  private static final TreeMap<Double, Integer> AREA_RANKS = new TreeMap<>(Map.of(
+    Double.MAX_VALUE, 1,
+    squareMetersToWorldArea(640_000_000), 2,
+    squareMetersToWorldArea(160_000_000), 3,
     squareMetersToWorldArea(40_000_000), 4,
     squareMetersToWorldArea(15_000_000), 5,
     squareMetersToWorldArea(1_000_000), 6
@@ -289,7 +292,7 @@ public class Place implements
   public void process(Tables.OsmIslandPolygon element, FeatureCollector features) {
     try {
       double area = element.source().area();
-      int rank = ISLAND_AREA_RANKS.ceilingEntry(area).getValue();
+      int rank = AREA_RANKS.ceilingEntry(area).getValue();
       int minzoom = rank <= 3 ? 8 : rank <= 4 ? 9 : 10;
 
       features.pointOnSurface(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
@@ -379,6 +382,23 @@ public class Place implements
         case "5" -> feature.setAttr(Fields.CAPITAL, 5);
         case "6" -> feature.setAttr(Fields.CAPITAL, 6);
       }
+    }
+  }
+
+  @Override
+  public void process(Tables.OsmBoundaryPolygon element, FeatureCollector features) {
+    try {
+      int rank = AREA_RANKS.ceilingEntry(element.source().area()).getValue();
+      int minzoom = rank <= 4 ? rank + 5 : 10;
+
+      features.pointOnSurface(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+        .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
+        .setAttr(OpenMapTilesSchema.Boundary.Fields.CLASS, element.boundary())
+        .setAttr(Fields.RANK, rank)
+        .setMinZoom(minzoom);
+    } catch (GeometryException e) {
+      e.log(stats, "omt_boundary_poly",
+        "Unable to get point for OSM boundary polygon " + element.source().id());
     }
   }
 
