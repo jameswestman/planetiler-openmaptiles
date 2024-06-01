@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021, MapTiler.com & OpenMapTiles contributors.
+Copyright (c) 2024, MapTiler.com & OpenMapTiles contributors.
 All rights reserved.
 
 Code license: BSD 3-Clause License
@@ -114,11 +114,6 @@ public class TransportationName implements
     .put(9, 8_000)
     .put(10, 4_000)
     .put(11, 2_000);
-  private static final ZoomFunction<Number> BUFFER_PIXEL_OVERRIDES =
-    ZoomFunction.fromMaxZoomThresholds(Map.of(
-      13, 256,
-      6, 256
-    ));
   private final boolean brunnel;
   private final boolean sizeForShield;
   private final boolean limitMerge;
@@ -263,7 +258,7 @@ public class TransportationName implements
 
     FeatureCollector.Feature feature = features.line(LAYER_NAME)
       .setBufferPixels(BUFFER_SIZE)
-      .setBufferPixelOverrides(BUFFER_PIXEL_OVERRIDES)
+      .setBufferPixelOverrides(MIN_LENGTH)
       .putAttrs(OsmTags.GetOsmTags(element.source()))
       .setId(OsmTags.GetFeatureId(element.source()))
       // TODO abbreviate road names - can't port osml10n because it is AGPL
@@ -326,7 +321,7 @@ public class TransportationName implements
     if (!nullOrEmpty(element.name())) {
       features.line(LAYER_NAME)
         .setBufferPixels(BUFFER_SIZE)
-        .setBufferPixelOverrides(BUFFER_PIXEL_OVERRIDES)
+        .setBufferPixelOverrides(MIN_LENGTH)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
         .setId(OsmTags.GetFeatureId(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
@@ -343,7 +338,7 @@ public class TransportationName implements
     if (!nullOrEmpty(element.name())) {
       features.line(LAYER_NAME)
         .setBufferPixels(BUFFER_SIZE)
-        .setBufferPixelOverrides(BUFFER_PIXEL_OVERRIDES)
+        .setBufferPixelOverrides(MIN_LENGTH)
         .putAttrs(OsmTags.GetOsmTags(element.source()))
         .setId(OsmTags.GetFeatureId(element.source()))
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
