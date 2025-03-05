@@ -18,6 +18,7 @@ public class OsmTags {
     "email",
     "internet_access",
     "level:ref",
+    "network:wikidata",
     "note",
     "opening_hours",
     "phone",
