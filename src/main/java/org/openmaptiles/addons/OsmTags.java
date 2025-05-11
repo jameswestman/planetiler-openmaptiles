@@ -24,6 +24,7 @@ public class OsmTags {
     "opening_hours",
     "phone",
     "population",
+    "private",
     "religion",
     "sport",
     "takeaway",
