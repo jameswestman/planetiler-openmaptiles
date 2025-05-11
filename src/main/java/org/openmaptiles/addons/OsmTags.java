@@ -17,6 +17,7 @@ public class OsmTags {
     "ele",
     "email",
     "internet_access",
+    "level",
     "level:ref",
     "network:wikidata",
     "note",
