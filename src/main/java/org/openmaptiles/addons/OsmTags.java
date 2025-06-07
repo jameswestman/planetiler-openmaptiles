@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class OsmTags {
   private static final HashSet<String> OSM_TAGS = new HashSet<String>(List.of(
+    "access",
     "brand:wikidata",
     "brand:wikipedia",
     "cuisine",
